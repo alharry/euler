@@ -7,3 +7,10 @@ euler_1 <- function(y){
 }
 
 euler_1(1000)
+
+
+microbenchmark::microbenchmark(euler_1(1000))
+
+# Unit: microseconds
+# expr    min     lq     mean median      uq     max neval
+# euler_1(1000) 55.764 66.198 78.15434  69.79 87.2375 174.132   100
