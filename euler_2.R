@@ -23,8 +23,8 @@ euler_2(4e6)
 microbenchmark::microbenchmark(euler_2(4e6))
 
 # Unit: microseconds
-# expr    min      lq     mean  median    uq    max neval
-# euler_2(4e+06) 39.563 42.7575 45.96144 43.9625 46.68 88.046   100
+# expr    min     lq     mean  median     uq     max neval
+# euler_2(4e+06) 87.579 91.685 94.51014 93.5655 95.106 160.106   100
 
 
 # R (Project Euler solution)
@@ -48,8 +48,8 @@ euler_2pe(4e6)
 microbenchmark::microbenchmark(euler_2pe(4e6))
 
 # Unit: microseconds
-# expr   min    lq    mean median    uq   max neval
-# euler_2pe(4e+06) 1.492 1.509 1.64328 1.5265 1.601 7.639   100
+# expr    min     lq     mean median      uq     max neval
+# euler_2pe(4e+06) 15.052 16.079 21.20379 17.105 22.5785 148.474   100
 
 # C++
 Rcpp::sourceCpp("euler_2.cpp")
@@ -58,5 +58,5 @@ euler2Cpp(4e6)
 microbenchmark::microbenchmark(euler2Cpp(4e6))
 
 # Unit: microseconds
-# expr   min     lq     mean median    uq     max neval
-# euler2Cpp(4e+06) 3.214 3.3935 13.16773  3.614 5.218 885.347   100
+# expr   min    lq    mean median     uq    max neval
+# euler2Cpp(4e+06) 2.394 3.079 8.33034 4.2765 12.145 40.711   100
