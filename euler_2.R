@@ -20,13 +20,6 @@ euler_2 <- function(x){
 
 euler_2(4e6)
 
-microbenchmark::microbenchmark(euler_2(4e6))
-
-# Unit: microseconds
-# expr    min     lq     mean  median     uq     max neval
-# euler_2(4e+06) 87.579 91.685 94.51014 93.5655 95.106 160.106   100
-
-
 # R (Project Euler solution)
 
 euler_2pe <- function(limit){
@@ -45,18 +38,24 @@ euler_2pe <- function(limit){
 
 euler_2pe(4e6)
 
-microbenchmark::microbenchmark(euler_2pe(4e6))
-
-# Unit: microseconds
-# expr    min     lq     mean median      uq     max neval
-# euler_2pe(4e+06) 15.052 16.079 21.20379 17.105 22.5785 148.474   100
-
 # C++
 Rcpp::sourceCpp("euler_2.cpp")
 euler2Cpp(4e6)
 
-microbenchmark::microbenchmark(euler2Cpp(4e6))
+# Save results
+library(tidyverse)
+library(microbenchmark)
 
-# Unit: microseconds
-# expr   min    lq    mean median     uq    max neval
-# euler2Cpp(4e+06) 2.394 3.079 8.33034 4.2765 12.145 40.711   100
+results <- microbenchmark(`2-r-Mine` = euler_2(4e6L),
+                          `2-r-PE` = euler_2pe(4e6L),
+                          `2-Cpp-PE` = euler2Cpp(4e6L), 
+                          times = 1000,
+                          unit = "us") 
+
+data <- data_frame(problem = results$expr, time = results$time) %>%
+  separate(problem, into = c("problem", "lang", "code"), sep = "-")
+
+
+read_rds("data.rds") %>%
+  full_join(data) %>% write_rds("data.rds")
+

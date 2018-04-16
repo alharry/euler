@@ -1,0 +1,32 @@
+---
+title: "README.rmd"
+output:
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
+```
+
+# euler
+
+Solutions to [Project Euler](www.projecteuler.net) problems in <code>R</code> and <code>C++</code>
+
+```{r, echo = FALSE}
+data <- read_rds("data.rds") %>% 
+  mutate(group = paste(lang, code, sep ="-")) %>%
+  mutate(Solution = fct_recode(group, "r (Mine)" = "r-Mine",
+                               "r (Project Euler)" = "r-PE",
+                               "C++ (Project Euler)" = "Cpp-PE"))
+
+p <- ggplot(data = data, aes(x = problem, y = time, fill = Solution)) +
+  geom_violin(scale = "width") + 
+  scale_y_log10(limits = c(1, max(data$time))) + coord_flip() + 
+  labs(y = "Time (microseconds)", x = "Euler problem",
+       title = "Project Euler solution times")
+p
+```
+
