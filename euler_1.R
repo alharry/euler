@@ -37,29 +37,10 @@ microbenchmark::microbenchmark(euler_1pe(999))
 # euler_1pe(999) 1.326 1.364 48.67212 1.4155 1.4485 4725.891   100
 
 # C++
+euler1Cpp()
 
-includesrc<- '
-euler1(const int n){
-int y = 999;
-int sum = 0;
+microbenchmark::microbenchmark(euler1Cpp())
 
-int p = 0;
-
-p = y/n;
-
-sum = n * (p * (p + 1)) / 2;
-
-std::cout << sum;
-return sum;
-}'
-
-
-CppBody <- '
-int x = Rcpp::as<int>(xs);
-return Rcpp::wrap( euler1(x) );'
-
-
-euler_1cpp <- inline::cxxfunction(sig = signature(xs = "int"),
-                                  plugin = "Rcpp",
-                                  incl = includesrc,
-                                  body = CppBody)
+# Unit: nanoseconds
+# expr min  lq   mean median  uq   max neval
+# euler1Cpp() 540 692 996.84  769.5 885 10375   100
