@@ -52,12 +52,6 @@ while (run == TRUE) {
 
 euler_3(600851475143)
 
-microbenchmark::microbenchmark(euler_3(600851475143))
-
-# Unit: milliseconds
-# expr      min       lq    mean   median      uq      max neval
-# euler_3(600851475143) 1.638255 1.830261 2.17057 1.975462 2.23208 5.211348   100
-
 # R (Project Euler solution)
 
 euler_3pe <- function(N){
@@ -93,10 +87,25 @@ if(n == 1){
     else{return(n)}
 }
 
+# C++
+Rcpp::sourceCpp("euler_3.cpp")
+euler3Cpp(600851475143)
 
-microbenchmark::microbenchmark(euler_3pe(600851475143))
+# Save results
+library(tidyverse)
+library(microbenchmark)
 
-# Unit: microseconds
-# expr     min      lq     mean  median       uq     max neval
-# euler_3pe(600851475143) 195.432 203.909 208.1393 206.398 210.2045 237.367   100
+results <- microbenchmark(`3-r-Mine` = euler_3(600851475143),
+                          `3-r-PE` = euler_3pe(600851475143),
+                          `3-Cpp-PE` = euler3Cpp(600851475143), 
+                          times = 1000,
+                          unit = "us") 
+
+data <- data_frame(problem = results$expr, time = results$time) %>%
+  separate(problem, into = c("problem", "lang", "code"), sep = "-")
+
+
+read_rds("data.rds") %>%
+  full_join(data) %>% write_rds("data.rds")
+
 
