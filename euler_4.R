@@ -80,6 +80,7 @@ data <- data_frame(problem = results$expr, time = results$time) %>%
 
 
 read_rds("data.rds") %>%
+  filter(!problem %in% data$problem[1]) %>% 
   full_join(data) %>% write_rds("data.rds")
 
 
