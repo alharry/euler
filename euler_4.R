@@ -19,7 +19,6 @@ max(y[y_100000 == y_000001 & y_010000 == y_000010 & y_001000 == y_000100])
 euler_4()
 
 # R (PE solution)
-
 euler_4pe <- function(){
 
   reverse <- function(n){
@@ -50,7 +49,7 @@ while (a >= 100){
   while (b >= a){
   if (a*b <= largest_palindrome){
       break}
-  if (isPalindrome(a*b)){
+  if (is_palindrome(a*b)){
     largest_palindrome = a*b}
   
   b = b-db
@@ -62,12 +61,17 @@ while (a >= 100){
 return(largest_palindrome)
 }
 
+# C++
+Rcpp::sourceCpp("euler_4.cpp")
+euler4Cpp()
+
 # Save results
 library(tidyverse)
 library(microbenchmark)
 
 results <- microbenchmark(`4-r-Mine` = euler_4(),
                           `4-r-PE` = euler_4pe(),
+                          `4-Cpp-PE` = euler4Cpp(),
                           times = 1000,
                           unit = "us")
 
