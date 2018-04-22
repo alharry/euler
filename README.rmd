@@ -13,7 +13,7 @@ library(tidyverse)
 
 # euler
 
-Solutions to [Project Euler](www.projecteuler.net) problems in <code>R</code> and <code>C++</code>
+Solutions to [Project Euler](www.projecteuler.net) problems in <code>R</code> and <code>C++</code>.
 
 ```{r, echo = FALSE}
 data <- read_rds("data.rds") %>% 
@@ -28,5 +28,6 @@ p <- ggplot(data = data, aes(x = problem, y = time, fill = Solution)) +
   labs(y = "Time (microseconds)", x = "Euler problem",
        title = "Project Euler solution times")
 p
+
 ```
 
