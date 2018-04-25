@@ -56,10 +56,6 @@ euler5Cpp()
 library(tidyverse)
 library(microbenchmark)
 
-# Save results
-library(tidyverse)
-library(microbenchmark)
-
 results <- microbenchmark(`5-r-Mine` = euler_5(),
                           `5-r-PE` = euler_5pe(),
                           `5-Cpp-PE` = euler5Cpp(),
