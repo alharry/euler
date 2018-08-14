@@ -48,7 +48,7 @@ p
 
 When coded in <code>R</code>, my solutions to Euler Problems were, on average `r mean(data_summary$ratio1) %>% round()` times slower than the method provided in the Project Euler solutions. Those same solutions were `r mean(data_summary$ratio2) %>% round()` times slower when written in <code>R</code> compared to when written in <code>C++</code>.
 
-```{r}
+```{r echo = FALSE}
 p <- ggplot(data = data_summary, aes(x = as.numeric(problem), y = ratio2)) + 
   geom_point() + geom_line() + scale_y_log10() +
   labs(y = "Ratio (Times slower)", x = "Euler problem",
