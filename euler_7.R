@@ -1,13 +1,13 @@
 # R (My solution)
 
-euler_7 <- function(){
+euler_7 <- function(max_prime){
   
 prime_check <- function(x){
     prime = TRUE
     ints <- 2:(x-1)
     index = ints[ints %% 2 == 1]
-    for(i in index) {
-      if ((x %% i) == 0) {
+    for(i in 1:length(index)) {
+      if ((x %% index[i]) == 0) {
         prime = FALSE
         break
       }
@@ -16,9 +16,8 @@ prime_check <- function(x){
   }
   
 run = TRUE  
-j = 1
-x = 3
-max_prime = 10001
+j = 2
+x = 5
 
 while(run == TRUE){
   
@@ -26,12 +25,17 @@ while(run == TRUE){
     j = j + 1
   }
   
-  if(j <= max_prime){
-  x = x + 1
-  } else {
+  if(j == max_prime){
     run = FALSE
+
+  } else {
+    x = x + 2
   }
+  
+}
+
+return(list(j = j, x = x))
 }
 
 
-}
+euler_7(10001)

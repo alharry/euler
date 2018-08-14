@@ -25,6 +25,7 @@ euler_1pe <- function(y){
 euler_1pe(999)
 
 # C++
+Rcpp::sourceCpp("euler_1.cpp")
 euler1Cpp()
 
 # Save results
@@ -40,4 +41,6 @@ results <- microbenchmark(`1-r-Mine` = euler_1(999),
 data <- data_frame(problem = results$expr, time = results$time) %>%
   separate(problem, into = c("problem", "lang", "code"), sep = "-")
 
-write_rds(data, "data.rds")
+read_rds("data.rds") %>%
+  filter(!problem %in% data$problem[1]) %>% 
+  full_join(data) %>% write_rds("data.rds")

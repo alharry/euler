@@ -18,9 +18,9 @@ Solutions to [Project Euler](www.projecteuler.net) problems in <code>R</code> an
 ```{r, echo = FALSE}
 data <- read_rds("data.rds") %>% 
   mutate(group = paste(lang, code, sep ="-")) %>%
-  mutate(Solution = fct_recode(group, "r (Mine)" = "r-Mine",
-                               "r (Project Euler)" = "r-PE",
-                               "C++ (Project Euler)" = "Cpp-PE"))
+  mutate(Solution = fct_recode(group, "r (My solution)" = "r-Mine",
+                               "r (Project Euler solution)" = "r-PE",
+                               "C++ (Project Euler solution)" = "Cpp-PE"))
 
 p <- ggplot(data = data, aes(x = problem, y = time, fill = Solution)) +
   geom_violin(scale = "width") + 
@@ -31,3 +31,19 @@ p
 
 ```
 
+```{r echo = FALSE}
+data_summary <- group_by(data, problem, Solution) %>% 
+  summarise(time = mean(time)) %>% 
+  spread(key = Solution, value = time) %>% 
+  mutate(ratio1 = `r (My solution)` / `r (Project Euler solution)`) %>%
+  mutate(ratio2 = `r (Project Euler solution)` / `C++ (Project Euler solution)`)
+
+
+p <- ggplot(data = data_summary, aes(x = as.numeric(problem), y = ratio1)) + 
+  geom_point() + geom_line() + scale_y_log10() +
+  labs(y = "Ratio", x = "Euler problem",
+       title = "Ratio of my problem solution time to Project Euler solution time")
+p
+```
+
+When coded in <code>R</code>, my solutions to Euler Problems were, on average `r mean(data_summary$ratio1) %>% round()` times slower than the method provided in the Project Euler solutions. Those same solutions were `r mean(data_summary$ratio2) %>% round()` times slower when written in <code>R</code> compared to when written in <code>C++</code>.
