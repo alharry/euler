@@ -5,9 +5,9 @@ euler_7 <- function(max_prime){
 prime_check <- function(x){
     prime = TRUE
     ints <- 2:(x-1)
-    index = ints[ints %% 2 == 1]
-    for(i in 1:length(index)) {
-      if ((x %% index[i]) == 0) {
+    ints = ints[ints %% 5 == 1]
+    for(i in 1:length(ints)) {
+      if ((x %% ints[i]) == 0) {
         prime = FALSE
         break
       }
@@ -16,8 +16,8 @@ prime_check <- function(x){
   }
   
 run = TRUE  
-j = 2
-x = 5
+j = 3
+x = 7
 
 while(run == TRUE){
   
@@ -36,6 +36,5 @@ while(run == TRUE){
 
 return(list(j = j, x = x))
 }
-
 
 euler_7(10001)
